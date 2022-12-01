@@ -1,4 +1,5 @@
 $COLOR_CONTENT: #0B0C17;
+$COLOR_CONTENT_ADD: #000;
 
 $COLOR_INACTIVE: rgba(255, 255, 255, 0.4);
 $COLOR_ACTIVE: #fff;
@@ -16,6 +17,11 @@ $RADIUS: 1.5rem;
     box-sizing: border-box;
     font-family: 'Work Sans', sans-serif;
     font-size: 1.6rem;
+
+    &::-webkit-scrollbar {
+        width: 0;
+        height: 0;
+    } 
 }
 
 html {
@@ -23,23 +29,8 @@ html {
 }
 
 body {
-    background-color: $COLOR_CONTENT;
-
-    &::-webkit-scrollbar {
-        width: 1.2rem;
-        height: 1.2rem;
-    }  
-
-    &::-webkit-scrollbar-thumb {
-        background: $COLOR_INACTIVE;
-        border-radius: $RADIUS;
-        border: 3px solid transparent;
-        background-clip: content-box;
-    }
-    
-    &::-webkit-scrollbar-track {
-        background: $COLOR_CONTENT;
-    }
+    background-color: $COLOR_CONTENT; 
+    transition: all .2s linear;
 }
 
 section {
@@ -57,7 +48,85 @@ a {
     }
 }
 
+// ---------------------- MODIFICATOR ----------------------
+
+.black {
+    background-color: $COLOR_CONTENT_ADD;
+}
+
+.dark_blue {
+    background-color: $COLOR_CONTENT;
+}
+
+
 // ---------------------- DEFAULT __ COMPONENTS ----------------------
+
+.loader {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background-color: $COLOR_CONTENT_ADD;
+    z-index: 9999;
+    transition: all .2s linear;
+
+    &.finished {
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    .circle {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border: 2px solid $COLOR_INACTIVE;
+        border-radius: 50%;
+        height: 30vh;
+        width: 30vh;
+        transition: all .3s ease-in;
+    
+        .circle_arc {
+            overflow: hidden;
+            position: absolute;
+            top: -5px;
+            right: 50%;
+            bottom: 50%;
+            left: -4px;
+            transform-origin: 100% 100%;
+            transform: rotate(150deg) skewX(30deg);
+    
+            &::before {
+                content: '';
+                box-sizing: border-box;
+                display: block;
+                border: 4px solid $COLOR_ACTIVE;
+                width: 217%;
+                height: 202%;
+                border-radius: 50%;
+                transform: skewX(-30deg);
+            }
+        }
+    
+        .circle_text {
+            position: absolute;
+            top: 50%;
+            transform: translate(40px, -50%);
+            right: 100%;
+            transition: all .3s ease-in;
+            
+            h1, h3 {
+                color: $COLOR_ACTIVE;
+                white-space: nowrap;
+                text-align: right;
+            }
+    
+            h1 {
+                margin-bottom: 10px;
+                font-size: 6rem;
+            }
+        }
+    }
+}
 
 .container {
     max-width: calc(85vh + 36rem);
@@ -84,6 +153,11 @@ a {
     }
 }
 
+.line_horizontal {
+    width: 100%;
+    border-bottom: 1px solid $COLOR_INACTIVE;
+}
+
 // ---------------------- COMPONENTS ----------------------
 
 header {
@@ -108,82 +182,239 @@ header {
     }
 }
 
-.circle {
-    position: absolute;
-    top: calc(50% + 3rem);
-    left: 50%;
-    transform: translate(-50%, -50%);
-    border: 2px solid $COLOR_INACTIVE;
-    border-radius: 50%;
-    height: 80vh;
-    width: 80vh;
-    transition: all .3s ease-in;
+.parallax_wrapper {
+    position: relative;
+    height: 100vh;
+}
 
-    .circle_arc {
-        overflow: hidden;
+.circle_section {
+    position: relative;
+
+    .circle {
         position: absolute;
-        top: -15px;
-        right: 50%;
-        bottom: 50%;
-        left: -5px;
-        transform-origin: 100% 100%;
-        transform: rotate(150deg) skewX(30deg);
-
-        &::before {
-            content: '';
-            box-sizing: border-box;
-            display: block;
-            border: 4px solid $COLOR_ACTIVE;
-            width: 217%;
-            height: 202%;
-            border-radius: 50%;
-            transform: skewX(-30deg);
-        }
-    }
-
-    .circle_text {
-        position: absolute;
-        top: 50%;
-        transform: translate(40px, -50%);
-        right: 100%;
+        top: calc(50% + 3rem);
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border: 2px solid $COLOR_INACTIVE;
+        border-radius: 50%;
+        height: 80vh;
+        width: 80vh;
         transition: all .3s ease-in;
-        
-        h1, h3 {
-            color: $COLOR_ACTIVE;
-            white-space: nowrap;
-            text-align: right;
+    
+        .circle_arc {
+            overflow: hidden;
+            position: absolute;
+            top: -15px;
+            right: 50%;
+            bottom: 50%;
+            left: -5px;
+            transform-origin: 100% 100%;
+            transform: rotate(150deg) skewX(30deg);
+    
+            &::before {
+                content: '';
+                box-sizing: border-box;
+                display: block;
+                border: 4px solid $COLOR_ACTIVE;
+                width: 217%;
+                height: 202%;
+                border-radius: 50%;
+                transform: skewX(-30deg);
+            }
         }
-
-        h1 {
-            margin-bottom: 10px;
-            font-size: 6rem;
+    
+        .circle_text {
+            position: absolute;
+            top: 50%;
+            transform: translate(40px, -50%);
+            right: 100%;
+            transition: all .3s ease-in;
+            
+            h1, h3 {
+                color: $COLOR_ACTIVE;
+                white-space: nowrap;
+                text-align: right;
+            }
+    
+            h1 {
+                margin-bottom: 10px;
+                font-size: 6rem;
+            }
+        }
+    
+        .circle_spline {
+            min-height: 100vh;
         }
     }
 
-    ul {
+    .little_circle {
         position: absolute;
-        top: 50%;
-        left: 100%;
-        transform: translate(50px, -50%);
-        list-style: none;
+        height: 50vh;
+        width: 50vh;
+        border-radius: 50%;
+        border: 1px solid $COLOR_INACTIVE;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        top: calc(50% + 3rem);
 
-        li {
-            margin-bottom: 20px;
-            color: $COLOR_INACTIVE;
-            white-space: nowrap;
-            cursor: pointer;
-            transition: all .1s linear;
-            transition: all .3s ease-in;
+        &.circle_right {
+            left: 100%;
+            transform: translate(-40%, -50%);
+        }
+    
+        &.circle_left {
+            right: 100%;
+            transform: translate(40%, -50%);
+        }
 
-            &:hover {
-                color: $COLOR_ACTIVE;
+        .little_circle__content {
+            background-color: $COLOR_INACTIVE;
+            height: calc(60% - 2rem);
+            width: calc(60% - 2rem);
+            border-radius: 50%;
+            background-color: $COLOR_INACTIVE;
+            position: relative;
+            box-shadow: 0 0 80px rgba(194, 194, 194, 0.3);
+
+            &::after {
+                position: absolute;
+                content: '';
+                height: calc(100% + 2rem);
+                width: calc(100% + 2rem);
+                border-radius: 50%;
+                border: 1rem solid $COLOR_INACTIVE;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
             }
         }
     }
+}
 
-    .circle_spline {
-        min-height: 100vh;
+.pro_beyond_section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .section_content {
+
+        h2 {
+            font-size: 18rem;
+            color: $COLOR_CONTENT;
+        }
+
+        h3, h4 {
+            margin-top: 5rem;
+            color: $COLOR_CONTENT_ADD;
+            font-size: 4.5rem;
+            font-weight: 500;
+        }
+
+        h4 {
+            font-size: 3rem;
+        }
+
+        a {
+            margin-top: 2rem;
+            display: flex;
+            align-items: center;
+            color: $COLOR_CONTENT_ADD;
+
+            p {
+                margin-right: .5rem;
+            }
+        }
     }
 }
 
+.colors_section {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-top: 12rem;
+
+    h2 {
+        color: #fff;
+        font-size: 10vh;
+    }
+
+    .section_content {
+        display: flex;
+        align-items: flex-end;
+
+        .list_images {
+            position: relative;
+            list-style: none;
+            margin-bottom: -5rem;
+        
+            li {
+                opacity: 0;
+                visibility: hidden;
+                transition: all .3s ease-out;
+                height: 100%;
+                position: absolute;
+                top: 0;
+                left: 0;
+        
+                &.list_images__active {
+                    opacity: 1;
+                    visibility: visible;
+                    position: static;
+                }
+    
+                img {
+                    height: 75vh;
+                }
+            }
+        }
+
+        .description {
+            margin-left: 4rem;
+            padding-bottom: 4rem;
+
+            .list_colors {
+                list-style: none;
+    
+                li {
+                    color: $COLOR_INACTIVE;
+                    font-size: 2rem;
+                    margin-bottom: 2rem;
+                    transition: all .3s ease-out;
+                    cursor: pointer;
+    
+                    &.list_colors__active {
+                        color: $COLOR_ACTIVE;
+                    }
+                }
+            }
+
+            .line_horizontal {
+                margin-top: 8rem;
+            }
+    
+            & > p {
+                color: $COLOR_INACTIVE;
+                font-size: 2rem;
+                margin-top: 2rem;
+            }
+
+            .bottom_content {
+                display: flex;
+                justify-content: space-between;
+                margin-top: 4rem;
+
+                svg {
+                    color: $COLOR_INACTIVE;
+                    font-size: 4rem;
+                }
+
+                & > p {
+                    width: 40%;
+                    color: $COLOR_INACTIVE;
+                }
+            }
+        }
+    }
+}
 
