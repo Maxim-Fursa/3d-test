@@ -88,6 +88,7 @@ function App() {
                     </div>
                 </div>
             </header>
+
             <div className="parallax-wrapper">
                 <Parallax pages={3} style={{ top: '0', left: '0' }} ref={parallax} className="parallax-wrapper__content">
                     <ParallaxLayer offset={0} speed={2.5} >
